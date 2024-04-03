@@ -1,10 +1,15 @@
-interface CardProps {
+interface ProductCardProps {
   title: string;
   bank: string;
   maxIntrRate: number;
   baseIntrRate: number;
 }
-function Card({ title, bank, maxIntrRate, baseIntrRate }: CardProps) {
+function ProductCard({
+  title,
+  bank,
+  maxIntrRate,
+  baseIntrRate,
+}: ProductCardProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-x-4">
@@ -24,4 +29,4 @@ function Card({ title, bank, maxIntrRate, baseIntrRate }: CardProps) {
   );
 }
 
-export default Card;
+export default ProductCard;

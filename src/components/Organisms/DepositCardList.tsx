@@ -1,19 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Card from "../Molecules/Card";
-import DepositSchema, {
+import Card from "../Molecules/ProductCard";
+import {
   Deposit,
   DepositBaseList,
   DepositOptionList,
 } from "@/schema/deposit.schema";
 import { useRouter } from "next/navigation";
 
-function HomePage() {
+function DepositCardList() {
   const router = useRouter();
 
   const [depositProducts, setDepositProducts] = useState<Deposit[]>([]);
-  const [savingProducts, setSavingProducts] = useState([]);
 
   function groupObjectsByMatchingProperty(
     baseList: DepositBaseList[],
@@ -50,46 +49,34 @@ function HomePage() {
     }
   };
 
-  //   const initSavingProducts = async () => {
-  //     try {
-  //       const response = await fetch(savingProductsSearchAPI);
-  //       const jsonData = await response.json();
-  //       setSavingProducts(jsonData.result.baseList);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
   useEffect(() => {
     initDepositProducts();
-    // initSavingProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="bg-gray-200">
-      <section className="w-full flex justify-center">
-        <ul className="w-[562px] px-5 grid gap-y-5 divide-y-2 rounded-xl bg-white p-5">
-          <div className="flex items-center justify-between">
-            <p>{depositProducts.length}개</p>
-            <div>최고 금리순</div>
-          </div>
-          {depositProducts?.map((deposit) => (
-            <li
-              key={deposit.fin_prdt_cd}
-              className="pt-5"
-              onClick={() => router.push(`/detail/${deposit.fin_prdt_cd}`)}
-            >
-              <Card
-                title={deposit.fin_prdt_nm}
-                bank={deposit.kor_co_nm}
-                maxIntrRate={deposit.intr_rate2}
-                baseIntrRate={deposit.intr_rate}
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
+    <ul className="grid gap-y-5 divide-y-2 rounded-xl p-5 bg-white">
+      <div className="flex items-center justify-between">
+        <p>{depositProducts.length}개</p>
+        <div>최고 금리순</div>
+      </div>
+
+      {depositProducts?.map((deposit) => (
+        <li
+          key={deposit.fin_prdt_cd}
+          className="pt-5 cursor-pointer"
+          onClick={() => router.push(`/detail/${deposit.fin_co_no}`)}
+        >
+          <Card
+            title={deposit.fin_prdt_nm}
+            bank={deposit.kor_co_nm}
+            maxIntrRate={deposit.intr_rate2}
+            baseIntrRate={deposit.intr_rate}
+          />
+        </li>
+      ))}
+    </ul>
   );
 }
 
-export default HomePage;
+export default DepositCardList;

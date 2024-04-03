@@ -1,4 +1,5 @@
-import Icon from "./Atom/Icon";
+import Link from "next/link";
+import Icon from "../Atom/Icon";
 
 function Header() {
   return (
@@ -13,10 +14,10 @@ function Header() {
       </div>
       <section className="w-full flex justify-center">
         <div className="w-[568px] flex px-5 justify-between">
-          <button>홈</button>
-          <button>예금</button>
-          <button>대출</button>
-          <button>카드</button>
+          <Link href="/">홈</Link>
+          <Link href="/list/deposit">예적금</Link>
+          <Link href="/">대출</Link>
+          <Link href="/list/deposit">me</Link>
         </div>
       </section>
     </header>
