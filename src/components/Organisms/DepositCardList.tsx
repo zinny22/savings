@@ -2,21 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import Card from "../Molecules/ProductCard";
-import {
-  Deposit,
-  DepositBaseList,
-  DepositOptionList,
-} from "@/schema/deposit.schema";
+import { Deposit, BaseList, OptionList } from "@/schema/deposit.schema";
 import { useRouter } from "next/navigation";
 
-function DepositCardList() {
+interface DepositCardListProps {
+  filteredBanks: string[];
+}
+function DepositCardList({ filteredBanks }: DepositCardListProps) {
   const router = useRouter();
 
   const [depositProducts, setDepositProducts] = useState<Deposit[]>([]);
 
   function groupObjectsByMatchingProperty(
-    baseList: DepositBaseList[],
-    optionList: DepositOptionList[]
+    baseList: BaseList[],
+    optionList: OptionList[]
   ) {
     const grouped: Deposit[] = [];
 
@@ -36,12 +35,13 @@ function DepositCardList() {
 
   const initDepositProducts = async () => {
     try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_DEPOSIT_PRODUCTS_API || ""
-      );
+      const url =
+        process.env.NEXT_PUBLIC_ENDPOINT +
+        `depositProductsSearch.json?auth=${process.env.NEXT_PUBLIC_KEY}&topFinGrpNo=020000&pageNo=1`;
+      const response = await fetch(url);
       const jsonData = await response.json();
-      const baseInfo: DepositBaseList[] = jsonData.result.baseList;
-      const optionList: DepositOptionList[] = jsonData.result.optionList;
+      const baseInfo: BaseList[] = jsonData.result.baseList;
+      const optionList: OptionList[] = jsonData.result.optionList;
       const result = groupObjectsByMatchingProperty(baseInfo, optionList);
       setDepositProducts(result);
     } catch (error) {
@@ -61,11 +61,16 @@ function DepositCardList() {
         <div>최고 금리순</div>
       </div>
 
-      {depositProducts?.map((deposit) => (
+      {(filteredBanks.length > 0
+        ? depositProducts?.filter((product) =>
+            filteredBanks.includes(product.fin_co_no)
+          )
+        : depositProducts
+      ).map((deposit) => (
         <li
           key={deposit.fin_prdt_cd}
           className="pt-5 cursor-pointer"
-          onClick={() => router.push(`/detail/${deposit.fin_co_no}`)}
+          onClick={() => router.push(`/deposit/${deposit.fin_co_no}`)}
         >
           <Card
             title={deposit.fin_prdt_nm}

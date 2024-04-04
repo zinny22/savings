@@ -11,10 +11,10 @@ function DepositDetail({ financeCd }: DetailPageProps) {
 
   const initDepositProducts = async () => {
     try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_DEPOSIT_PRODUCTS_API +
-          `&financeCd=${financeCd}` || ""
-      );
+      const url =
+        process.env.NEXT_PUBLIC_ENDPOINT +
+        `/depositProductsSearch.json?auth=${process.env.NEXT_PUBLIC_KEY}&topFinGrpNo=030300&pageNo=1&financeCd=${financeCd}`;
+      const response = await fetch(url || "");
       const jsonData = await response.json();
       console.log(jsonData);
     } catch (error) {

@@ -12,10 +12,10 @@ function TabButton({ lastPathName }: TabButtonProps) {
   const router = useRouter();
 
   return (
-    <div className="flex items-center bg-gray-200 w-fit px-3 py-1 rounded-xl relative">
+    <div className="flex items-center bg-gray-200 w-fit px-1 py-1 rounded-3xl relative">
       <div
         className={cx(
-          "absolute bg-white w-[80px] rounded-xl h-[30px] transition-all duration-500",
+          "absolute bg-white w-[80px] rounded-3xl h-[30px] transition-all duration-500",
           lastPathName === "saving"
             ? "translate-x-20"
             : lastPathName === "parking"

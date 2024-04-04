@@ -1,15 +1,15 @@
 export default interface DepositSchema {
-  baseList: DepositBaseList[];
+  baseList: BaseList[];
   err_cd: string;
   err_msg: string;
   max_page_no: number;
   now_page_no: number;
-  optionList: DepositOptionList[];
+  optionList: OptionList[];
   prdt_div: string;
   total_count: number;
 }
 
-export interface Deposit extends DepositBaseList {
+export interface Deposit extends BaseList {
   //최고 우대 금리 (소수점 2자리)
   intr_rate2: number;
   //저축 금리
@@ -27,7 +27,7 @@ export interface Deposit extends DepositBaseList {
   fin_prdt_cd: string;
 }
 
-export interface DepositBaseList {
+export interface BaseList {
   //공시 제출월
   dcls_month: string;
   //금융회사 코드
@@ -62,7 +62,7 @@ export interface DepositBaseList {
   fin_prdt_cd: string;
 }
 
-export interface DepositOptionList {
+export interface OptionList {
   //최고 우대 금리 (소수점 2자리)
   intr_rate2: number;
   //저축 금리
