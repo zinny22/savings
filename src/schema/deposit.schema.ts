@@ -9,22 +9,8 @@ export default interface DepositSchema {
   total_count: number;
 }
 
-export interface Deposit extends BaseList {
-  //최고 우대 금리 (소수점 2자리)
-  intr_rate2: number;
-  //저축 금리
-  intr_rate: number;
-  //저축 금리 유형
-  intr_rate_type: string;
-  //저축 금리 유형명
-  intr_rate_type_nm: string;
-  //저축 기간
-  save_trm: string;
-  dcls_month: string;
-  //금융 회사 코드
-  fin_co_no: string;
-  //금융 상품 코드
-  fin_prdt_cd: string;
+export interface CombinedDeposit extends BaseList {
+  optionList: OptionList[];
 }
 
 export interface BaseList {
