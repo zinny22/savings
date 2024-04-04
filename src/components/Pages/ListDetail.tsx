@@ -26,7 +26,9 @@ function ListDetail() {
         {lastPathName === "deposit" && (
           <DepositCardList filteredBanks={filteredBanks} />
         )}
-        {lastPathName === "saving" && <SavingCardList />}
+        {lastPathName === "saving" && (
+          <SavingCardList filteredBanks={filteredBanks} />
+        )}
       </section>
     </section>
   );

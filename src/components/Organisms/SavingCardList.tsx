@@ -2,53 +2,65 @@
 
 import React, { useEffect, useState } from "react";
 import Card from "../Molecules/ProductCard";
-import DepositSchema, {
-  Deposit,
-  BaseList,
-  OptionList,
-} from "@/schema/deposit.schema";
 import { useRouter } from "next/navigation";
+import { SortKey } from "./DepositCardList";
+import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
+import { BaseList, CombinedDeposit, OptionList } from "@/schema/deposit.schema";
+interface SavingCardListProps {
+  filteredBanks: string[];
+}
 
-function SavingCardList() {
+function SavingCardList({ filteredBanks }: SavingCardListProps) {
   const router = useRouter();
 
-  const [data, setData] = useState<DepositSchema>();
-  const [savingProducts, setSavingProducts] = useState<Deposit[]>([]);
+  const [combinedSavings, setCombinedSavings] = useState<CombinedDeposit[]>([]);
+  const [sort, setSort] = useState<SortKey>("최고금리순");
 
-  function groupObjectsByMatchingProperty(
-    baseList: BaseList[],
+  function groupSavingsByMatchingProductCode(
+    baseSavings: BaseList[],
     optionList: OptionList[]
   ) {
-    const grouped: Deposit[] = [];
+    const groupedSavings: CombinedDeposit[] = [];
 
-    baseList.forEach((obj1) => {
-      const prdtCode = obj1["fin_prdt_cd"];
-      const matchingObj2 = optionList.find(
-        (obj2) => obj2["fin_prdt_cd"] === prdtCode
+    baseSavings.forEach((baseSaving) => {
+      const productCode = baseSaving["fin_prdt_cd"];
+      const matchingOptions = optionList.filter(
+        (option) => option["fin_prdt_cd"] === productCode
       );
 
-      if (matchingObj2) {
-        const combinedObject = { ...obj1, ...matchingObj2 };
-        grouped.push(combinedObject);
+      if (matchingOptions.length > 0) {
+        const combinedSaving = { ...baseSaving, optionList: matchingOptions };
+        groupedSavings.push(combinedSaving);
       }
     });
-    return grouped;
+    return groupedSavings;
   }
 
   const initSavingProducts = async () => {
     try {
-      const response = await fetch("/api/APTRealPrice");
+      const url =
+        process.env.NEXT_PUBLIC_ENDPOINT +
+        `savingProductsSearch.json?auth=${process.env.NEXT_PUBLIC_KEY}&topFinGrpNo=020000&pageNo=1`;
+      const response = await fetch(url);
       const jsonData = await response.json();
       const baseInfo: BaseList[] = jsonData.result.baseList;
       const optionList: OptionList[] = jsonData.result.optionList;
-      const result = groupObjectsByMatchingProperty(baseInfo, optionList);
-      setSavingProducts(result);
-      console.log(result);
-      setData(jsonData);
+      const result = groupSavingsByMatchingProductCode(baseInfo, optionList);
+      setCombinedSavings(result);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const savings =
+    filteredBanks.length > 0
+      ? combinedSavings?.filter((product) =>
+          filteredBanks.includes(product.fin_co_no)
+        )
+      : combinedSavings;
+
+  const { sortedProductsByBaseRate, sortedProductsByMaxRate } =
+    getSortedProductsByRate(savings);
 
   useEffect(() => {
     initSavingProducts();
@@ -58,24 +70,45 @@ function SavingCardList() {
   return (
     <ul className="grid gap-y-5 divide-y-2 rounded-xl p-5 bg-white">
       <div className="flex items-center justify-between">
-        <p>{data?.total_count}개</p>
-        <div>최고 금리순</div>
+        <p>{savings.length}개</p>
+        <div
+          onClick={() =>
+            sort === "최고금리순"
+              ? setSort("기본금리순")
+              : setSort("최고금리순")
+          }
+        >
+          {sort}
+        </div>
       </div>
 
-      {savingProducts?.map((saving) => (
-        <li
-          key={saving.fin_prdt_cd}
-          className="pt-5 cursor-pointer"
-          onClick={() => router.push(`/detail/${saving.fin_co_no}`)}
-        >
-          <Card
-            title={saving.fin_prdt_nm}
-            bank={saving.kor_co_nm}
-            maxIntrRate={saving.intr_rate2}
-            baseIntrRate={saving.intr_rate}
-          />
-        </li>
-      ))}
+      {(sort === "최고금리순"
+        ? sortedProductsByMaxRate
+        : sortedProductsByBaseRate
+      ).map((saving) => {
+        const maxOption = [...saving.optionList].sort(
+          (a, b) => b.intr_rate - a.intr_rate
+        );
+
+        const baseIntrRate = [...saving.optionList].find(
+          (item) => item.save_trm === "12"
+        );
+
+        return (
+          <li
+            key={saving.fin_prdt_cd}
+            className="pt-5 cursor-pointer"
+            onClick={() => router.push(`/saving/${saving.fin_co_no}`)}
+          >
+            <Card
+              title={saving.fin_prdt_nm}
+              bank={saving.kor_co_nm}
+              maxIntrRate={maxOption[0].intr_rate2}
+              baseIntrRate={baseIntrRate?.intr_rate || 0}
+            />
+          </li>
+        );
+      })}
     </ul>
   );
 }

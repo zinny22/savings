@@ -7,8 +7,6 @@ interface DetailPageProps {
 }
 
 function DepositDetail({ financeCd }: DetailPageProps) {
-  console.log(financeCd);
-
   const initDepositProducts = async () => {
     try {
       const url =
