@@ -40,10 +40,12 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
   }
 
   const initDepositProducts = async () => {
+    const auth = process.env.NEXT_PUBLIC_KEY;
+    const topFinGrpNo = "020000";
+    const pageNo = 1;
+
     try {
-      const url =
-        process.env.NEXT_PUBLIC_ENDPOINT +
-        `depositProductsSearch.json?auth=${process.env.NEXT_PUBLIC_KEY}&topFinGrpNo=020000&pageNo=1`;
+      const url = `/depositProductsSearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}`;
       const response = await fetch(url);
       const jsonData = await response.json();
       const baseInfo: BaseList[] = jsonData.result.baseList;

@@ -8,6 +8,14 @@ const nextConfig = {
 
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: "/:path*",
+        destination: "https://finlife.fss.or.kr/finlifeapi/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

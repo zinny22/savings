@@ -14,10 +14,12 @@ function BankList({ filteredBanks, setFilteredBanks }: BankListProps) {
   const [banks, setBanks] = useState<BankBaseList[]>([]);
 
   const initBankList = async () => {
+    const auth = process.env.NEXT_PUBLIC_KEY;
+    const topFinGrpNo = "020000";
+    const pageNo = 1;
+
     try {
-      const url =
-        process.env.NEXT_PUBLIC_ENDPOINT +
-        `companySearch.json?auth=${process.env.NEXT_PUBLIC_KEY}&topFinGrpNo=020000&pageNo=1`;
+      const url = `/companySearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}`;
       const response = await fetch(url);
       const jsonData = (await response.json()).result as BankSchema;
       setBanks(jsonData.baseList);
