@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Card from "../Molecules/ProductCard";
+import ProductCard from "../Molecules/ProductCard";
 import { CombinedDeposit, BaseList, OptionList } from "@/schema/deposit.schema";
 import { useRouter } from "next/navigation";
 import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
+import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
 
 export type SortKey = "최고금리순" | "기본금리순";
 interface DepositCardListProps {
@@ -19,26 +20,6 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
   );
   const [sort, setSort] = useState<SortKey>("최고금리순");
 
-  function groupDepositsByMatchingProductCode(
-    baseDeposits: BaseList[],
-    optionList: OptionList[]
-  ) {
-    const groupedDeposits: CombinedDeposit[] = [];
-
-    baseDeposits.forEach((baseDeposit) => {
-      const productCode = baseDeposit["fin_prdt_cd"];
-      const matchingOptions = optionList.filter(
-        (option) => option["fin_prdt_cd"] === productCode
-      );
-
-      if (matchingOptions.length > 0) {
-        const combinedDeposit = { ...baseDeposit, optionList: matchingOptions };
-        groupedDeposits.push(combinedDeposit);
-      }
-    });
-    return groupedDeposits;
-  }
-
   const initDepositProducts = async () => {
     const auth = process.env.NEXT_PUBLIC_KEY;
     const topFinGrpNo = "020000";
@@ -50,7 +31,10 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
       const jsonData = await response.json();
       const baseInfo: BaseList[] = jsonData.result.baseList;
       const optionList: OptionList[] = jsonData.result.optionList;
-      const result = groupDepositsByMatchingProductCode(baseInfo, optionList);
+      const result = getGroupProductsByMatchingProductCode(
+        baseInfo,
+        optionList
+      );
       setCombinedDeposits(result);
     } catch (error) {
       console.log(error);
@@ -72,7 +56,7 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
   }, []);
 
   return (
-    <ul className="grid gap-y-5 divide-y-2 rounded-xl p-5 bg-white">
+    <div className="rounded-xl p-5 bg-white">
       <div className="flex items-center justify-between">
         <p>{deposits.length}개</p>
         <div
@@ -86,34 +70,40 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
         </div>
       </div>
 
-      {(sort === "최고금리순"
-        ? sortedProductsByMaxRate
-        : sortedProductsByBaseRate
-      ).map((deposit) => {
-        const maxOption = [...deposit.optionList].sort(
-          (a, b) => b.intr_rate - a.intr_rate
-        );
+      <ul className="grid gap-y-5 divide-y-2">
+        {(sort === "최고금리순"
+          ? sortedProductsByMaxRate
+          : sortedProductsByBaseRate
+        ).map((deposit) => {
+          const maxOption = [...deposit.optionList].sort(
+            (a, b) => b.intr_rate - a.intr_rate
+          );
 
-        const baseIntrRate = [...deposit.optionList].find(
-          (item) => item.save_trm === "12"
-        );
+          const baseIntrRate = [...deposit.optionList].find(
+            (item) => item.save_trm === "12"
+          );
 
-        return (
-          <li
-            key={deposit.fin_prdt_cd}
-            className="pt-5 cursor-pointer"
-            onClick={() => router.push(`/deposit/${deposit.fin_co_no}`)}
-          >
-            <Card
-              title={deposit.fin_prdt_nm}
-              bank={deposit.kor_co_nm}
-              maxIntrRate={maxOption[0].intr_rate2}
-              baseIntrRate={baseIntrRate?.intr_rate || 0}
-            />
-          </li>
-        );
-      })}
-    </ul>
+          return (
+            <li
+              key={deposit.fin_prdt_cd}
+              className="pt-5 cursor-pointer"
+              onClick={() =>
+                router.push(
+                  `/detail?type=deposit&code=${deposit.fin_prdt_cd}&fiCd=${deposit.fin_co_no}`
+                )
+              }
+            >
+              <ProductCard
+                title={deposit.fin_prdt_nm}
+                bank={deposit.kor_co_nm}
+                maxIntrRate={maxOption[0].intr_rate2}
+                baseIntrRate={baseIntrRate?.intr_rate || 0}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
