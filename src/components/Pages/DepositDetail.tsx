@@ -1,33 +1,62 @@
 "use client";
 
-import { useEffect } from "react";
+import DepositSchema, { CombinedDeposit } from "@/schema/deposit.schema";
+import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
+import { useEffect, useState } from "react";
+import Icon, { IconName } from "../Atom/Icon";
+import DetailProductCard from "../Molecules/DetailProductCard";
+import RelativeProductList from "../Organisms/RelativeProductList";
 
 interface DetailPageProps {
   financeCd: string;
+  code: string;
 }
 
-function DepositDetail({ financeCd }: DetailPageProps) {
-  const initDepositProducts = async () => {
+function DepositDetail({ financeCd, code }: DetailPageProps) {
+  const [deposit, setDeposit] = useState<CombinedDeposit>();
+  const [sameBankDeposits, setSameBankDeposit] = useState<DepositSchema>();
+
+  const initDepositProduct = async () => {
+    const auth = process.env.NEXT_PUBLIC_KEY;
+    const topFinGrpNo = "020000";
+    const pageNo = 1;
+
     try {
-      const url =
-        process.env.NEXT_PUBLIC_ENDPOINT +
-        `/depositProductsSearch.json?auth=${process.env.NEXT_PUBLIC_KEY}&topFinGrpNo=030300&pageNo=1&financeCd=${financeCd}`;
-      const response = await fetch(url || "");
+      const url = `/depositProductsSearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}&financeCd=${financeCd}`;
+      const response = await fetch(url);
       const jsonData = await response.json();
-      console.log(jsonData);
+      const products = jsonData.result as DepositSchema;
+
+      const filteredBaseList = products.baseList.filter(
+        (item) => item.fin_prdt_cd === code
+      );
+
+      const filteredOptionList = products.optionList.filter(
+        (item) => item.fin_prdt_cd === code
+      );
+
+      const result = getGroupProductsByMatchingProductCode(
+        filteredBaseList,
+        filteredOptionList
+      );
+
+      setDeposit(result[0]);
+      setSameBankDeposit(products);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    initDepositProducts();
+    initDepositProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <section className="w-full flex justify-center">
-      <div className="w-[562px] px-5 grid gap-y-5 divide-y-2 rounded-xl bg-white p-5"></div>
-    </section>
+    <div className="grid gap-y-5">
+      <DetailProductCard deposit={deposit} />
+      <RelativeProductList sameBankDeposits={sameBankDeposits} />
+    </div>
   );
 }
 
