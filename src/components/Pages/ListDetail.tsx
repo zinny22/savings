@@ -15,21 +15,19 @@ function ListDetail() {
   const [filteredBanks, setFilteredBanks] = useState<string[]>([]);
 
   return (
-    <section className="bg-gray-200 w-full flex justify-center">
-      <section className="w-[562px] grid gap-y-4 py-5">
-        <BankSelector
-          lastPathName={lastPathName as TabKey}
-          filteredBanks={filteredBanks}
-          setFilteredBanks={setFilteredBanks}
-        />
+    <section className="w-[562px] grid gap-y-4 py-5">
+      <BankSelector
+        lastPathName={lastPathName as TabKey}
+        filteredBanks={filteredBanks}
+        setFilteredBanks={setFilteredBanks}
+      />
 
-        {lastPathName === "deposit" && (
-          <DepositCardList filteredBanks={filteredBanks} />
-        )}
-        {lastPathName === "saving" && (
-          <SavingCardList filteredBanks={filteredBanks} />
-        )}
-      </section>
+      {lastPathName === "deposit" && (
+        <DepositCardList filteredBanks={filteredBanks} />
+      )}
+      {lastPathName === "saving" && (
+        <SavingCardList filteredBanks={filteredBanks} />
+      )}
     </section>
   );
 }
