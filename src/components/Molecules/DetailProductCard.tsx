@@ -57,8 +57,8 @@ function DetailProductCard({ deposit }: DetailProductCardProps) {
         <p>기간별 금리</p>
 
         <div></div>
-        {deposit?.optionList.map((item) => (
-          <div key={item.fin_co_no}>
+        {deposit?.optionList.map((item, index) => (
+          <div key={index}>
             <p>기간:{item.save_trm}</p>
             <p>기본금리{item.intr_rate}</p>
             <p>최대금리:{item.intr_rate2}</p>

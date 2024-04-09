@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Icon, { IconName } from "../Atom/Icon";
 import DetailProductCard from "../Molecules/DetailProductCard";
 import RelativeProductList from "../Organisms/RelativeProductList";
+import DepositMaturityCalculator from "../Organisms/DepositMaturityCalculator";
 
 interface DetailPageProps {
   financeCd: string;
@@ -55,6 +56,7 @@ function DepositDetail({ financeCd, code }: DetailPageProps) {
   return (
     <div className="grid gap-y-5">
       <DetailProductCard deposit={deposit} />
+      <DepositMaturityCalculator deposit={deposit} />
       <RelativeProductList sameBankDeposits={sameBankDeposits} />
     </div>
   );
