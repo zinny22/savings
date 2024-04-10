@@ -2,19 +2,19 @@ import { CombinedDeposit } from "@/schema/deposit.schema";
 import Icon, { IconName } from "../Atom/Icon";
 
 interface DetailProductCardProps {
-  deposit?: CombinedDeposit;
+  combinedProduct?: CombinedDeposit;
 }
 
-function DetailProductCard({ deposit }: DetailProductCardProps) {
-  const maxOption = [...(deposit?.optionList || [])].sort(
+function DetailProductCard({ combinedProduct }: DetailProductCardProps) {
+  const maxOption = [...(combinedProduct?.optionList || [])].sort(
     (a, b) => b.intr_rate - a.intr_rate
   );
 
-  const baseIntrRate = [...(deposit?.optionList || [])].find(
+  const baseIntrRate = [...(combinedProduct?.optionList || [])].find(
     (item) => item.save_trm === "12"
   );
 
-  console.log(deposit);
+  console.log(combinedProduct);
   return (
     <section className="rounded-xl p-5 bg-white grid gap-y-5">
       <div className="flex items-center justify-between">
@@ -22,9 +22,9 @@ function DetailProductCard({ deposit }: DetailProductCardProps) {
           <div className="w-[42px] h-[42px] rounded-full">
             <Icon
               name={
-                deposit?.kor_co_nm === "한국스탠다드차타드은행"
+                combinedProduct?.kor_co_nm === "한국스탠다드차타드은행"
                   ? "SC제일"
-                  : (deposit?.kor_co_nm
+                  : (combinedProduct?.kor_co_nm
                       .replace("은행", "")
                       .replace("주식회사", "")
                       .replace(" ", "") as IconName)
@@ -32,11 +32,13 @@ function DetailProductCard({ deposit }: DetailProductCardProps) {
             />
           </div>
           <div className="grid gap-y-1">
-            <p>{deposit?.fin_prdt_nm}</p>
+            <p>{combinedProduct?.fin_prdt_nm}</p>
             <p>
-              {deposit?.kor_co_nm === "한국스탠다드차타드은행"
+              {combinedProduct?.kor_co_nm === "한국스탠다드차타드은행"
                 ? "SC제일"
-                : deposit?.kor_co_nm.replace("주식회사", "").replace(" ", "")}
+                : combinedProduct?.kor_co_nm
+                    .replace("주식회사", "")
+                    .replace(" ", "")}
             </p>
           </div>
         </div>
@@ -47,17 +49,17 @@ function DetailProductCard({ deposit }: DetailProductCardProps) {
         </div>
       </div>
 
-      <p>{deposit?.etc_note}</p>
-      <p>{deposit?.join_way}</p>
-      <p className="whitespace-pre-line">{deposit?.join_member}</p>
-      <p className="whitespace-pre-line">{deposit?.spcl_cnd}</p>
-      <p className="whitespace-pre-line">{deposit?.mtrt_int}</p>
+      <p>{combinedProduct?.etc_note}</p>
+      <p>{combinedProduct?.join_way}</p>
+      <p className="whitespace-pre-line">{combinedProduct?.join_member}</p>
+      <p className="whitespace-pre-line">{combinedProduct?.spcl_cnd}</p>
+      <p className="whitespace-pre-line">{combinedProduct?.mtrt_int}</p>
 
       <div>
         <p>기간별 금리</p>
 
         <div></div>
-        {deposit?.optionList.map((item, index) => (
+        {combinedProduct?.optionList.map((item, index) => (
           <div key={index}>
             <p>기간:{item.save_trm}</p>
             <p>기본금리{item.intr_rate}</p>

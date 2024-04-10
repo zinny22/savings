@@ -1,29 +1,25 @@
-"use client";
-
 import DepositSchema, { CombinedDeposit } from "@/schema/deposit.schema";
 import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
 import { useEffect, useState } from "react";
-import Icon, { IconName } from "../Atom/Icon";
 import DetailProductCard from "../Molecules/DetailProductCard";
 import RelativeProductList from "../Organisms/RelativeProductList";
-import DepositMaturityCalculator from "../Organisms/DepositMaturityCalculator";
 
-interface DetailPageProps {
+interface SavingDetailProps {
   financeCd: string;
   code: string;
 }
 
-function DepositDetail({ financeCd, code }: DetailPageProps) {
-  const [deposit, setDeposit] = useState<CombinedDeposit>();
-  const [sameBankDeposits, setSameBankDeposit] = useState<DepositSchema>();
+function SavingDetail({ financeCd, code }: SavingDetailProps) {
+  const [saving, setSaving] = useState<CombinedDeposit>();
+  const [sameBankSavings, setSameBankSavings] = useState<DepositSchema>();
 
-  const initDepositProduct = async () => {
+  const initSavingProduct = async () => {
     const auth = process.env.NEXT_PUBLIC_KEY;
     const topFinGrpNo = "020000";
     const pageNo = 1;
 
     try {
-      const url = `/depositProductsSearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}&financeCd=${financeCd}`;
+      const url = `/savingProductsSearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}&financeCd=${financeCd}`;
       const response = await fetch(url);
       const jsonData = await response.json();
       const products = jsonData.result as DepositSchema;
@@ -41,25 +37,24 @@ function DepositDetail({ financeCd, code }: DetailPageProps) {
         filteredOptionList
       );
 
-      setDeposit(result[0]);
-      setSameBankDeposit(products);
+      setSaving(result[0]);
+      setSameBankSavings(products);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    initDepositProduct();
+    initSavingProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="grid gap-y-5">
-      <DetailProductCard combinedProduct={deposit} />
-      <DepositMaturityCalculator deposit={deposit} />
-      <RelativeProductList sameBankProducts={sameBankDeposits} />
+      <DetailProductCard combinedProduct={saving} />
+      <RelativeProductList sameBankProducts={sameBankSavings} />
     </div>
   );
 }
 
-export default DepositDetail;
+export default SavingDetail;

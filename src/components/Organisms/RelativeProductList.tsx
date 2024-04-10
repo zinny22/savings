@@ -6,10 +6,10 @@ import ProductCard from "../Molecules/ProductCard";
 import { useRouter } from "next/navigation";
 
 interface RelativeProductListProps {
-  sameBankDeposits?: DepositSchema;
+  sameBankProducts?: DepositSchema;
 }
 
-function RelativeProductList({ sameBankDeposits }: RelativeProductListProps) {
+function RelativeProductList({ sameBankProducts }: RelativeProductListProps) {
   const router = useRouter();
 
   const [combinedDeposits, setCombinedDeposits] = useState<CombinedDeposit[]>(
@@ -17,9 +17,9 @@ function RelativeProductList({ sameBankDeposits }: RelativeProductListProps) {
   );
 
   useEffect(() => {
-    if (sameBankDeposits?.baseList && sameBankDeposits.optionList) {
-      const baseInfo = sameBankDeposits.baseList;
-      const optionList = sameBankDeposits.optionList;
+    if (sameBankProducts?.baseList && sameBankProducts.optionList) {
+      const baseInfo = sameBankProducts.baseList;
+      const optionList = sameBankProducts.optionList;
 
       const result = getGroupProductsByMatchingProductCode(
         baseInfo,
@@ -27,7 +27,7 @@ function RelativeProductList({ sameBankDeposits }: RelativeProductListProps) {
       );
       setCombinedDeposits(result);
     }
-  }, [sameBankDeposits?.baseList, sameBankDeposits?.optionList]);
+  }, [sameBankProducts?.baseList, sameBankProducts?.optionList]);
 
   return (
     <section className="rounded-xl p-5 bg-white grid gap-y-5">

@@ -85,7 +85,11 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
             <li
               key={saving.fin_prdt_cd}
               className="pt-5 cursor-pointer"
-              onClick={() => router.push(`/saving/${saving.fin_co_no}`)}
+              onClick={() =>
+                router.push(
+                  `/detail?type=saving&code=${saving.fin_prdt_cd}&fiCd=${saving.fin_co_no}`
+                )
+              }
             >
               <Card
                 title={saving.fin_prdt_nm}
