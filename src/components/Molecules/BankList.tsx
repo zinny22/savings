@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { cx } from "class-variance-authority";
 import { finGrpNos } from "../Pages/ListDetail";
 import Image from "next/image";
-import getBankName from "@/utils/getBankName";
+import getBankNameAbbreviation from "@/utils/getBankNameAbbreviation";
 
 interface BankListProps {
   filteredBanks: string[];
@@ -60,13 +60,13 @@ function BankList({ filteredBanks, setFilteredBanks }: BankListProps) {
           onClick={() => handleClickBank(bank.fin_co_no)}
         >
           <Image
-            src={`/banks/${getBankName(bank.kor_co_nm)}.png`}
+            src={`/banks/${getBankNameAbbreviation(bank.kor_co_nm)}.png`}
             width={40}
             height={40}
             alt={bank.kor_co_nm}
           />
           <p className="whitespace-nowrap text-sm">
-            {getBankName(bank.kor_co_nm)}
+            {getBankNameAbbreviation(bank.kor_co_nm)}
           </p>
         </li>
       ))}
