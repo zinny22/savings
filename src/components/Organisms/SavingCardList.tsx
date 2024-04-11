@@ -7,6 +7,7 @@ import { SortKey } from "./DepositCardList";
 import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
 import { BaseList, CombinedDeposit, OptionList } from "@/schema/deposit.schema";
 import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
+import { finGrpNos } from "../Pages/ListDetail";
 interface SavingCardListProps {
   filteredBanks: string[];
 }
@@ -17,13 +18,12 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
   const [combinedSavings, setCombinedSavings] = useState<CombinedDeposit[]>([]);
   const [sort, setSort] = useState<SortKey>("최고금리순");
 
-  const initSavingProducts = async () => {
+  const initSavingProducts = async (finGrpNo: string) => {
     const auth = process.env.NEXT_PUBLIC_KEY;
-    const topFinGrpNo = "020000";
     const pageNo = 1;
 
     try {
-      const url = `/savingProductsSearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}`;
+      const url = `/savingProductsSearch.json?auth=${auth}&topFinGrpNo=${finGrpNo}&pageNo=${pageNo}`;
       const response = await fetch(url);
       const jsonData = await response.json();
       const baseInfo: BaseList[] = jsonData.result.baseList;
@@ -32,7 +32,7 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
         baseInfo,
         optionList
       );
-      setCombinedSavings(result);
+      setCombinedSavings((p) => [...p, ...result]);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +49,9 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
     getSortedProductsByRate(savings);
 
   useEffect(() => {
-    initSavingProducts();
+    finGrpNos.forEach((finGrpNo) => {
+      initSavingProducts(finGrpNo);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,7 +74,7 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
         {(sort === "최고금리순"
           ? sortedProductsByMaxRate
           : sortedProductsByBaseRate
-        ).map((saving) => {
+        ).map((saving, index) => {
           const maxOption = [...saving.optionList].sort(
             (a, b) => b.intr_rate - a.intr_rate
           );
@@ -83,7 +85,7 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
 
           return (
             <li
-              key={saving.fin_prdt_cd}
+              key={index}
               className="pt-5 cursor-pointer"
               onClick={() =>
                 router.push(

@@ -6,6 +6,7 @@ import { CombinedDeposit, BaseList, OptionList } from "@/schema/deposit.schema";
 import { useRouter } from "next/navigation";
 import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
 import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
+import { finGrpNos } from "../Pages/ListDetail";
 
 export type SortKey = "최고금리순" | "기본금리순";
 interface DepositCardListProps {
@@ -20,13 +21,12 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
   );
   const [sort, setSort] = useState<SortKey>("최고금리순");
 
-  const initDepositProducts = async () => {
+  const initDepositProducts = async (finGrpNo: string) => {
     const auth = process.env.NEXT_PUBLIC_KEY;
-    const topFinGrpNo = "020000";
     const pageNo = 1;
 
     try {
-      const url = `/depositProductsSearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}`;
+      const url = `/depositProductsSearch.json?auth=${auth}&topFinGrpNo=${finGrpNo}&pageNo=${pageNo}`;
       const response = await fetch(url);
       const jsonData = await response.json();
       const baseInfo: BaseList[] = jsonData.result.baseList;
@@ -35,7 +35,7 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
         baseInfo,
         optionList
       );
-      setCombinedDeposits(result);
+      setCombinedDeposits((p) => [...p, ...result]);
     } catch (error) {
       console.log(error);
     }
@@ -51,8 +51,9 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
     getSortedProductsByRate(deposits);
 
   useEffect(() => {
-    initDepositProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    finGrpNos.forEach((finGrpNo) => {
+      initDepositProducts(finGrpNo);
+    });
   }, []);
 
   return (
@@ -74,7 +75,7 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
         {(sort === "최고금리순"
           ? sortedProductsByMaxRate
           : sortedProductsByBaseRate
-        ).map((deposit) => {
+        ).map((deposit, index) => {
           const maxOption = [...deposit.optionList].sort(
             (a, b) => b.intr_rate - a.intr_rate
           );
@@ -85,7 +86,7 @@ function DepositCardList({ filteredBanks }: DepositCardListProps) {
 
           return (
             <li
-              key={deposit.fin_prdt_cd}
+              key={index}
               className="pt-5 cursor-pointer"
               onClick={() =>
                 router.push(
