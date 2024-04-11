@@ -2,8 +2,10 @@
 
 import BankSchema, { BankBaseList } from "@/schema/bank.schema";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Icon, { IconName } from "../Atom/Icon";
 import { cx } from "class-variance-authority";
+import { finGrpNos } from "../Pages/ListDetail";
+import Image from "next/image";
+import getBankName from "@/utils/getBankName";
 
 interface BankListProps {
   filteredBanks: string[];
@@ -13,16 +15,15 @@ interface BankListProps {
 function BankList({ filteredBanks, setFilteredBanks }: BankListProps) {
   const [banks, setBanks] = useState<BankBaseList[]>([]);
 
-  const initBankList = async () => {
+  const initBankList = async (finGrpNo: string) => {
     const auth = process.env.NEXT_PUBLIC_KEY;
-    const topFinGrpNo = "020000";
     const pageNo = 1;
 
     try {
-      const url = `/companySearch.json?auth=${auth}&topFinGrpNo=${topFinGrpNo}&pageNo=${pageNo}`;
+      const url = `/companySearch.json?auth=${auth}&topFinGrpNo=${finGrpNo}&pageNo=${pageNo}`;
       const response = await fetch(url);
       const jsonData = (await response.json()).result as BankSchema;
-      setBanks(jsonData.baseList);
+      setBanks((prev) => [...jsonData.baseList]);
     } catch (error) {
       console.log(error);
     }
@@ -39,15 +40,17 @@ function BankList({ filteredBanks, setFilteredBanks }: BankListProps) {
   };
 
   useEffect(() => {
-    initBankList();
+    //TODO: 자세한 필터 추가 될 경우 각 은행별 값 가지고 올 수 있어야함
+    initBankList(finGrpNos[0]);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ul className="flex gap-x-2 overflow-x-auto max-w-[540px]">
-      {banks?.map((bank) => (
+      {banks?.map((bank, index) => (
         <li
-          key={bank.fin_co_no}
+          key={index}
           className={cx(
             "cursor-pointer min-w-[90px] grid gap-y-2 justify-items-center border px-2 py-5 rounded-md",
             filteredBanks?.includes(bank.fin_co_no)
@@ -56,25 +59,14 @@ function BankList({ filteredBanks, setFilteredBanks }: BankListProps) {
           )}
           onClick={() => handleClickBank(bank.fin_co_no)}
         >
-          <Icon
-            name={
-              bank.kor_co_nm === "한국스탠다드차타드은행"
-                ? "SC제일"
-                : (bank.kor_co_nm
-                    .replace("은행", "")
-                    .replace("주식회사", "")
-                    .replace(" ", "") as IconName)
-            }
-            width={20}
-            height={20}
+          <Image
+            src={`/banks/${getBankName(bank.kor_co_nm)}.png`}
+            width={40}
+            height={40}
+            alt={bank.kor_co_nm}
           />
           <p className="whitespace-nowrap text-sm">
-            {bank.kor_co_nm === "한국스탠다드차타드은행"
-              ? "SC제일"
-              : bank.kor_co_nm
-                  .replace("은행", "")
-                  .replace("주식회사", "")
-                  .replace(" ", "")}
+            {getBankName(bank.kor_co_nm)}
           </p>
         </li>
       ))}
