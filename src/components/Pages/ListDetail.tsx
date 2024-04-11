@@ -6,6 +6,9 @@ import DepositCardList from "../Organisms/DepositCardList";
 import { TabKey } from "../Molecules/TabButton";
 import SavingCardList from "../Organisms/SavingCardList";
 import { useState } from "react";
+import AnnuitySavingList from "../Organisms/AnnuitySavingList";
+
+export const finGrpNos = ["020000", "030200", "030300", "050000", "060000"];
 
 function ListDetail() {
   const pathName = usePathname();
@@ -27,6 +30,9 @@ function ListDetail() {
       )}
       {lastPathName === "saving" && (
         <SavingCardList filteredBanks={filteredBanks} />
+      )}
+      {lastPathName === "annuitySaving" && (
+        <AnnuitySavingList filteredBanks={filteredBanks} />
       )}
     </section>
   );

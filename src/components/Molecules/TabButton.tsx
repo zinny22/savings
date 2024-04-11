@@ -3,7 +3,7 @@
 import { cx } from "class-variance-authority";
 import { useRouter } from "next/navigation";
 
-export type TabKey = "saving" | "deposit" | "parking" | "cma";
+export type TabKey = "saving" | "deposit" | "annuitySaving" | "cma";
 
 interface TabButtonProps {
   lastPathName: TabKey;
@@ -18,7 +18,7 @@ function TabButton({ lastPathName }: TabButtonProps) {
           "absolute bg-white w-[80px] rounded-3xl h-[30px] transition-all duration-500",
           lastPathName === "saving"
             ? "translate-x-20"
-            : lastPathName === "parking"
+            : lastPathName === "annuitySaving"
             ? "translate-x-40"
             : lastPathName === "cma"
             ? "translate-x-60"
@@ -47,11 +47,11 @@ function TabButton({ lastPathName }: TabButtonProps) {
       <button
         className={cx(
           "w-[80px] h-[31px] z-10 text-sm",
-          lastPathName === "parking" && "font-bold"
+          lastPathName === "annuitySaving" && "font-bold"
         )}
-        onClick={() => router.push("/list/parking")}
+        onClick={() => router.push("/list/annuitySaving")}
       >
-        파킹
+        연금
       </button>
       <button
         className={cx(
@@ -60,7 +60,7 @@ function TabButton({ lastPathName }: TabButtonProps) {
         )}
         onClick={() => router.push("/list/cma")}
       >
-        CMA
+        대출
       </button>
     </div>
   );

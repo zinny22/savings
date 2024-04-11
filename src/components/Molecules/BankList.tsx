@@ -60,13 +60,13 @@ function BankList({ filteredBanks, setFilteredBanks }: BankListProps) {
           onClick={() => handleClickBank(bank.fin_co_no)}
         >
           <Image
-            src={`/banks/${getBankNameAbbreviation(bank.kor_co_nm)}.png`}
+            src={`/banks/${getBankNameAbbreviation(bank.kor_co_nm, true)}.png`}
             width={40}
             height={40}
             alt={bank.kor_co_nm}
           />
           <p className="whitespace-nowrap text-sm">
-            {getBankNameAbbreviation(bank.kor_co_nm)}
+            {getBankNameAbbreviation(bank.kor_co_nm, true)}
           </p>
         </li>
       ))}
