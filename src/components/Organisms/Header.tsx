@@ -11,13 +11,15 @@ function Header() {
   return (
     <header className="sticky top-0 z-20">
       <div className="bg-white flex items-center justify-center px-6 h-[72px] gap-x-[120px]">
-        <Icon name="Logo" />
+        <Link href="/">
+          <Icon name="Logo" />
+        </Link>
 
         <div className="flex items-center gap-x-[72px]">
           <Link
             href="/list/deposit"
             className={cx(
-              "font-semibold text-lg",
+              "font-medium text-lg ",
               pathName.includes("list")
                 ? "border-b-2 border-gray-950 text-gray-950"
                 : "text-[#505050]"
@@ -28,8 +30,8 @@ function Header() {
           <Link
             href="/"
             className={cx(
-              " font-semibold text-lg",
-              pathName === "/"
+              " font-medium text-lg",
+              pathName.includes("find")
                 ? "border-b-2 border-gray-950 text-gray-950"
                 : "text-[#505050]"
             )}
@@ -39,8 +41,8 @@ function Header() {
           <Link
             href="/signIn"
             className={cx(
-              " font-semibold text-lg",
-              pathName === "/"
+              " font-medium text-lg",
+              pathName.includes("signIn")
                 ? "border-b-2 border-gray-950 text-gray-950"
                 : "text-[#505050]"
             )}

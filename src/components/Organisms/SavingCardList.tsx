@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Card from "../Molecules/ProductCard";
-import { useRouter } from "next/navigation";
-import { SortKey } from "./DepositCardList";
-import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
 import { BaseList, CombinedDeposit, OptionList } from "@/schema/deposit.schema";
 import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
+import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Card from "../Molecules/ProductCard";
 import { finGrpNos } from "../Pages/ListDetail";
+import { SortKey } from "./DepositCardList";
 interface SavingCardListProps {
   filteredBanks: string[];
+  sortedNumber?: number;
 }
 
-function SavingCardList({ filteredBanks }: SavingCardListProps) {
+function SavingCardList({ filteredBanks, sortedNumber }: SavingCardListProps) {
   const router = useRouter();
 
   const [combinedSavings, setCombinedSavings] = useState<CombinedDeposit[]>([]);
@@ -55,22 +56,29 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
   }, []);
 
   return (
-    <div className="rounded-xl p-5 bg-white">
-      <div className="flex items-center justify-between">
-        <p>{savings.length}개</p>
-        <div
-          onClick={() =>
-            sort === "최고금리순"
-              ? setSort("기본금리순")
-              : setSort("최고금리순")
-          }
-        >
-          {sort}
+    <div className="rounded-xl p-3 bg-white">
+      {!sortedNumber && (
+        <div className="flex items-center justify-between">
+          <p>{savings.length}개</p>
+          <div
+            onClick={() =>
+              sort === "최고금리순"
+                ? setSort("기본금리순")
+                : setSort("최고금리순")
+            }
+          >
+            {sort}
+          </div>
         </div>
-      </div>
+      )}
 
-      <ul className="grid gap-y-5 divide-y-2">
-        {(sort === "최고금리순"
+      <ul className="grid gap-y-5">
+        {(sortedNumber
+          ? (sort === "최고금리순"
+              ? sortedProductsByMaxRate
+              : sortedProductsByBaseRate
+            ).slice(0, sortedNumber)
+          : sort === "최고금리순"
           ? sortedProductsByMaxRate
           : sortedProductsByBaseRate
         ).map((saving, index) => {
@@ -85,13 +93,18 @@ function SavingCardList({ filteredBanks }: SavingCardListProps) {
           return (
             <li
               key={index}
-              className="pt-5 cursor-pointer"
+              className="cursor-pointer flex items-start"
               onClick={() =>
                 router.push(
                   `/detail?type=saving&code=${saving.fin_prdt_cd}&fiCd=${saving.fin_co_no}`
                 )
               }
             >
+              {sortedNumber && (
+                <p className="bg-[#0075FF] w-5 h-5 text-white flex items-center justify-center">
+                  {index + 1}
+                </p>
+              )}
               <Card
                 title={saving.fin_prdt_nm}
                 bank={saving.kor_co_nm}

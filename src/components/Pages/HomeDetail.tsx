@@ -1,29 +1,19 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
-const RANGE = "Sheet1!A1:E10";
+import Top4List from "../Organisms/Top4List";
 
 function HomeDetail() {
-  const [data, setData] = useState(null);
+  return (
+    <div className="h-[100vh] w-full pt-[58px]">
+      <section className="flex gap-x-6 px-[180px]">
+        <div className="flex-1 bg-[#2972FF] rounded-tr-xl rounded-br-xl p-12 text-white text-[28px] font-bold cursor-pointer">
+          나에게
+          <br />
+          맞는 예적금은?
+        </div>
 
-  useEffect(() => {
-    fetchSheetData();
-  }, []);
-
-  const fetchSheetData = async () => {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${process.env.NEXT_PUBLIC_GOOGLE_SHEETS_KEY}/values/${RANGE}?key=${process.env.NEXT_PUBLIC_GOOGLE_SHETTS_API}`;
-
-    try {
-      const response = await fetch(url);
-      const jsonData = await response.json();
-      console.log(jsonData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return <div className="bg-gray-200 h-[100vh] w-full">home</div>;
+        <Top4List />
+      </section>
+    </div>
+  );
 }
 
 export default HomeDetail;
