@@ -6,7 +6,6 @@ export { default as Search } from "./search.svg";
 export { default as IBK기업 } from "./IBK기업.svg";
 export { default as 국민 } from "./KB국민.svg";
 export { default as KB증권 } from "./KB증권.svg";
-export { default as 한국산업 } from "./KDB산업.svg";
 export { default as KEB외환 } from "./KEB외환.svg";
 export { default as 농협 } from "./NH농협.svg";
 export { default as NH투자증권 } from "./NH투자증권.svg";
