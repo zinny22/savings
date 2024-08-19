@@ -9,7 +9,7 @@ type Props = {
 function SavingDetailPage({ params }: Props) {
   const financeCd = params.financeCd;
 
-  return <DepositDetail financeCd={financeCd} />;
+  return <DepositDetail financeCd={financeCd} code={""} />;
 }
 
 export default SavingDetailPage;
