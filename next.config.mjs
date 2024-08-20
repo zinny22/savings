@@ -9,6 +9,7 @@ const nextConfig = {
 
     return config;
   },
+  missingSuspenseWithCSRBailout: false,
   async rewrites() {
     return [
       {
