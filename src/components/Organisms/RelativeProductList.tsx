@@ -1,9 +1,8 @@
-import DepositSchema, { CombinedDeposit } from "@/schema/deposit.schema";
-import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
-import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
-import { useEffect, useState } from "react";
-import ProductCard from "../Molecules/ProductCard";
-import { useRouter } from "next/navigation";
+import DepositSchema, { CombinedDeposit } from '@/schema/deposit.schema';
+import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import ProductListCard from '../Molecules/ProductListCard';
 
 interface RelativeProductListProps {
   sameBankProducts?: DepositSchema;
@@ -40,7 +39,7 @@ function RelativeProductList({ sameBankProducts }: RelativeProductListProps) {
           );
 
           const baseIntrRate = [...deposit.optionList].find(
-            (item) => item.save_trm === "12"
+            (item) => item.save_trm === '12'
           );
 
           return (
@@ -53,7 +52,7 @@ function RelativeProductList({ sameBankProducts }: RelativeProductListProps) {
                 )
               }
             >
-              <ProductCard
+              <ProductListCard
                 title={deposit.fin_prdt_nm}
                 bank={deposit.kor_co_nm}
                 maxIntrRate={maxOption[0].intr_rate2}

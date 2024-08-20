@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { BaseList, CombinedDeposit, OptionList } from "@/schema/deposit.schema";
-import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
-import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import ProductCard from "../Molecules/ProductCard";
-import { finGrpNos } from "../Pages/ListDetail";
+import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
+import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
+import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { finGrpNos } from '../Pages/ListDetail';
+import ProductListCard from '../Molecules/ProductListCard';
 
-export type SortKey = "최고금리순" | "기본금리순";
+export type SortKey = '최고금리순' | '기본금리순';
 interface DepositCardListProps {
   filteredBanks: string[];
   sortedNumber?: number;
@@ -23,7 +23,7 @@ function DepositCardList({
   const [combinedDeposits, setCombinedDeposits] = useState<CombinedDeposit[]>(
     []
   );
-  const [sort, setSort] = useState<SortKey>("최고금리순");
+  const [sort, setSort] = useState<SortKey>('최고금리순');
 
   const initDepositProducts = async (finGrpNo: string) => {
     const auth = process.env.NEXT_PUBLIC_KEY;
@@ -67,9 +67,9 @@ function DepositCardList({
           <p>{deposits.length}개</p>
           <div
             onClick={() =>
-              sort === "최고금리순"
-                ? setSort("기본금리순")
-                : setSort("최고금리순")
+              sort === '최고금리순'
+                ? setSort('기본금리순')
+                : setSort('최고금리순')
             }
           >
             {sort}
@@ -79,11 +79,11 @@ function DepositCardList({
 
       <ul className="grid gap-y-5">
         {(sortedNumber
-          ? (sort === "최고금리순"
+          ? (sort === '최고금리순'
               ? sortedProductsByMaxRate
               : sortedProductsByBaseRate
             ).slice(0, sortedNumber)
-          : sort === "최고금리순"
+          : sort === '최고금리순'
           ? sortedProductsByMaxRate
           : sortedProductsByBaseRate
         ).map((deposit, index) => {
@@ -93,7 +93,7 @@ function DepositCardList({
           );
 
           const baseIntrRate = [...deposit.optionList].find(
-            (item) => item.save_trm === "12"
+            (item) => item.save_trm === '12'
           );
 
           return (
@@ -111,7 +111,7 @@ function DepositCardList({
                   {index + 1}
                 </p>
               )}
-              <ProductCard
+              <ProductListCard
                 title={deposit.fin_prdt_nm}
                 bank={deposit.kor_co_nm}
                 maxIntrRate={maxOption[0].intr_rate2}
