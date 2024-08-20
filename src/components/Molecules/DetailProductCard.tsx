@@ -1,5 +1,4 @@
 import { CombinedDeposit } from "@/schema/deposit.schema";
-import Icon, { IconName } from "../Atom/Icon";
 
 interface DetailProductCardProps {
   combinedProduct?: CombinedDeposit;
@@ -20,7 +19,7 @@ function DetailProductCard({ combinedProduct }: DetailProductCardProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <div className="w-[42px] h-[42px] rounded-full">
-            <Icon
+            {/* <Icon
               name={
                 combinedProduct?.kor_co_nm === "한국스탠다드차타드은행"
                   ? "SC제일"
@@ -29,7 +28,7 @@ function DetailProductCard({ combinedProduct }: DetailProductCardProps) {
                       .replace("주식회사", "")
                       .replace(" ", "") as IconName)
               }
-            />
+            /> */}
           </div>
           <div className="grid gap-y-1">
             <p>{combinedProduct?.fin_prdt_nm}</p>
