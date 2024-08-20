@@ -9,7 +9,6 @@ function HomeDetail() {
           <br />
           맞는 예적금은?
         </div>
-        <div>???</div>
 
         <Top4List />
       </section>
