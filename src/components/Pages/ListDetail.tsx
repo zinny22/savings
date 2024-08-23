@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import BankSelector from "../Organisms/BankSelector";
-import DepositCardList from "../Organisms/DepositCardList";
-import { TabKey } from "../Molecules/TabButton";
-import SavingCardList from "../Organisms/SavingCardList";
-import { useState } from "react";
-import AnnuitySavingList from "../Organisms/AnnuitySavingList";
+import { usePathname } from 'next/navigation';
+import BankSelector from '../organisms/BankSelector';
+import DepositCardList from '../organisms/DepositCardList';
+import { TabKey } from '../molecules/TabButton';
+import SavingCardList from '../organisms/SavingCardList';
+import { useState } from 'react';
+import AnnuitySavingList from '../organisms/AnnuitySavingList';
 
-export const finGrpNos = ["020000", "030200", "030300", "050000", "060000"];
+export const finGrpNos = ['020000', '030200', '030300', '050000', '060000'];
 
 function ListDetail() {
   const pathName = usePathname();
-  const pathParts = pathName.split("/");
+  const pathParts = pathName.split('/');
   const lastPathName = pathParts[pathParts.length - 1];
 
   const [filteredBanks, setFilteredBanks] = useState<string[]>([]);
@@ -25,13 +25,13 @@ function ListDetail() {
         setFilteredBanks={setFilteredBanks}
       />
 
-      {lastPathName === "deposit" && (
+      {lastPathName === 'deposit' && (
         <DepositCardList filteredBanks={filteredBanks} />
       )}
-      {lastPathName === "saving" && (
+      {lastPathName === 'saving' && (
         <SavingCardList filteredBanks={filteredBanks} />
       )}
-      {lastPathName === "annuitySaving" && (
+      {lastPathName === 'annuitySaving' && (
         <AnnuitySavingList filteredBanks={filteredBanks} />
       )}
     </section>

@@ -1,4 +1,4 @@
-import ListDetail from "@/components/Pages/ListDetail";
+import ListDetail from '@/components/pages/ListDetail';
 
 function AnnuitySavingPage() {
   return <ListDetail />;

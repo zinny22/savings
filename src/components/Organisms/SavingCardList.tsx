@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { BaseList, CombinedDeposit, OptionList } from "@/schema/deposit.schema";
-import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
-import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import Card from "../Molecules/ProductCard";
-import { finGrpNos } from "../Pages/ListDetail";
-import { SortKey } from "./DepositCardList";
+import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
+import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
+import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Card from '../molecules/ProductCard';
+import { finGrpNos } from '../pages/ListDetail';
+import { SortKey } from './DepositCardList';
 interface SavingCardListProps {
   filteredBanks: string[];
   sortedNumber?: number;
@@ -17,7 +17,7 @@ function SavingCardList({ filteredBanks, sortedNumber }: SavingCardListProps) {
   const router = useRouter();
 
   const [combinedSavings, setCombinedSavings] = useState<CombinedDeposit[]>([]);
-  const [sort, setSort] = useState<SortKey>("최고금리순");
+  const [sort, setSort] = useState<SortKey>('최고금리순');
 
   const initSavingProducts = async (finGrpNo: string) => {
     const auth = process.env.NEXT_PUBLIC_KEY;
@@ -62,9 +62,9 @@ function SavingCardList({ filteredBanks, sortedNumber }: SavingCardListProps) {
           <p>{savings.length}개</p>
           <div
             onClick={() =>
-              sort === "최고금리순"
-                ? setSort("기본금리순")
-                : setSort("최고금리순")
+              sort === '최고금리순'
+                ? setSort('기본금리순')
+                : setSort('최고금리순')
             }
           >
             {sort}
@@ -74,11 +74,11 @@ function SavingCardList({ filteredBanks, sortedNumber }: SavingCardListProps) {
 
       <ul className="grid gap-y-5">
         {(sortedNumber
-          ? (sort === "최고금리순"
+          ? (sort === '최고금리순'
               ? sortedProductsByMaxRate
               : sortedProductsByBaseRate
             ).slice(0, sortedNumber)
-          : sort === "최고금리순"
+          : sort === '최고금리순'
           ? sortedProductsByMaxRate
           : sortedProductsByBaseRate
         ).map((saving, index) => {
@@ -87,7 +87,7 @@ function SavingCardList({ filteredBanks, sortedNumber }: SavingCardListProps) {
           );
 
           const baseIntrRate = [...saving.optionList].find(
-            (item) => item.save_trm === "12"
+            (item) => item.save_trm === '12'
           );
 
           return (

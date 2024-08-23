@@ -1,17 +1,90 @@
-import Top4List from "../Organisms/Top4List";
+'use client';
+
+import { useEffect, useState } from 'react';
+import Toggle from '../atom/Toggle/Toggle';
+import VerticalCardList from '../organisms/VerticalCardList/VerticalCardList';
+import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
+import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
+import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
+import { finGrpNos } from './ListDetail';
 
 function HomeDetail() {
+  const [toggle, setToggle] = useState('');
+  const [combinedDeposits, setCombinedDeposits] = useState<CombinedDeposit[]>(
+    []
+  );
+  const [combinedSavings, setCombinedSavings] = useState<CombinedDeposit[]>([]);
+
+  const initDepositProducts = async (finGrpNo: string) => {
+    const auth = process.env.NEXT_PUBLIC_KEY;
+    const pageNo = 1;
+
+    try {
+      const url = `/depositProductsSearch.json?auth=${auth}&topFinGrpNo=${finGrpNo}&pageNo=${pageNo}`;
+      const response = await fetch(url);
+      const jsonData = await response.json();
+      const baseInfo: BaseList[] = jsonData.result.baseList;
+      const optionList: OptionList[] = jsonData.result.optionList;
+      const result = getGroupProductsByMatchingProductCode(
+        baseInfo,
+        optionList
+      );
+      setCombinedDeposits((p) => [...p, ...result]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const initSavingProducts = async (finGrpNo: string) => {
+    const auth = process.env.NEXT_PUBLIC_KEY;
+    const pageNo = 1;
+
+    try {
+      const url = `/savingProductsSearch.json?auth=${auth}&topFinGrpNo=${finGrpNo}&pageNo=${pageNo}`;
+      const response = await fetch(url);
+      const jsonData = await response.json();
+      const baseInfo: BaseList[] = jsonData.result.baseList;
+      const optionList: OptionList[] = jsonData.result.optionList;
+      const result = getGroupProductsByMatchingProductCode(
+        baseInfo,
+        optionList
+      );
+      setCombinedSavings((p) => [...p, ...result]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { sortedProductsByMaxRate } = getSortedProductsByRate(
+    toggle === '예금' ? combinedDeposits : combinedSavings
+  );
+
+  useEffect(() => {
+    if (toggle !== '예금') return;
+
+    finGrpNos.forEach((finGrpNo) => {
+      initDepositProducts(finGrpNo);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (toggle !== '적금') return;
+
+    finGrpNos.forEach((finGrpNo) => {
+      initSavingProducts(finGrpNo);
+    });
+  }, []);
+
   return (
     <div className="h-[100vh] w-full pt-[58px]">
-      <section className="flex gap-x-6 px-[180px]">
-        <div className="flex-1 bg-[#2972FF] rounded-tr-xl rounded-br-xl p-12 text-white text-[28px] font-bold cursor-pointer">
-          나에게
-          <br />
-          맞는 예적금은?
-        </div>
+      <div className="flex justify-between items-center">
+        <p>이자 높은 상품</p>
+        <Toggle list={['예금', '적금', '파킹']} setToggle={setToggle} />
+      </div>
 
-        <Top4List />
-      </section>
+      <VerticalCardList
+        sortedProductsByMaxRate={sortedProductsByMaxRate.slice(0, 4)}
+      />
     </div>
   );
 }
