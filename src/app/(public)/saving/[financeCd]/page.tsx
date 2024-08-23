@@ -1,4 +1,4 @@
-import DepositDetail from "@/components/Pages/DepositDetail";
+import DepositDetail from '@/components/pages/DepositDetail';
 
 type Props = {
   params: {
@@ -9,7 +9,7 @@ type Props = {
 function SavingDetailPage({ params }: Props) {
   const financeCd = params.financeCd;
 
-  return <DepositDetail financeCd={financeCd} code={""} />;
+  return <DepositDetail financeCd={financeCd} code={''} />;
 }
 
 export default SavingDetailPage;

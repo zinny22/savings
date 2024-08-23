@@ -1,8 +1,8 @@
-import DepositSchema, { CombinedDeposit } from "@/schema/deposit.schema";
-import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
-import { useEffect, useState } from "react";
-import DetailProductCard from "../Molecules/DetailProductCard";
-import RelativeProductList from "../Organisms/RelativeProductList";
+import DepositSchema, { CombinedDeposit } from '@/schema/deposit.schema';
+import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
+import { useEffect, useState } from 'react';
+import DetailProductCard from '../molecules/DetailProductCard';
+import RelativeProductList from '../organisms/RelativeProductList';
 
 interface SavingDetailProps {
   financeCd: string;
@@ -15,7 +15,7 @@ function SavingDetail({ financeCd, code }: SavingDetailProps) {
 
   const initSavingProduct = async () => {
     const auth = process.env.NEXT_PUBLIC_KEY;
-    const topFinGrpNo = "020000";
+    const topFinGrpNo = '020000';
     const pageNo = 1;
 
     try {

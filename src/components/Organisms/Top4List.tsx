@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import DepositCardList from './DepositCardList';
 import SavingCardList from './SavingCardList';
-import Toggle from '../Atom/Toggle/Toggle';
+import Toggle from '../atom/Toggle/Toggle';
 
 function Top4List() {
   const [filteredBanks, setFilteredBanks] = useState<string[]>([]);

@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import DepositSchema, { CombinedDeposit } from "@/schema/deposit.schema";
-import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
-import { useEffect, useState } from "react";
-import Icon, { IconName } from "../Atom/Icon";
-import DetailProductCard from "../Molecules/DetailProductCard";
-import RelativeProductList from "../Organisms/RelativeProductList";
-import DepositMaturityCalculator from "../Organisms/DepositMaturityCalculator";
+import DepositSchema, { CombinedDeposit } from '@/schema/deposit.schema';
+import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
+import { useEffect, useState } from 'react';
+import Icon, { IconName } from '../atom/Icon';
+import DetailProductCard from '../molecules/DetailProductCard';
+import RelativeProductList from '../organisms/RelativeProductList';
+import DepositMaturityCalculator from '../organisms/DepositMaturityCalculator';
 
 interface DetailPageProps {
   financeCd: string;
@@ -19,7 +19,7 @@ function DepositDetail({ financeCd, code }: DetailPageProps) {
 
   const initDepositProduct = async () => {
     const auth = process.env.NEXT_PUBLIC_KEY;
-    const topFinGrpNo = "020000";
+    const topFinGrpNo = '020000';
     const pageNo = 1;
 
     try {

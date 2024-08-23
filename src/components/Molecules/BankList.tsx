@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import BankSchema, { BankBaseList } from "@/schema/bank.schema";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { cx } from "class-variance-authority";
-import { finGrpNos } from "../Pages/ListDetail";
-import Image from "next/image";
-import getBankNameAbbreviation from "@/utils/getBankNameAbbreviation";
+import BankSchema, { BankBaseList } from '@/schema/bank.schema';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { cx } from 'class-variance-authority';
+import { finGrpNos } from '../pages/ListDetail';
+import Image from 'next/image';
+import getBankNameAbbreviation from '@/utils/getBankNameAbbreviation';
 
 interface BankListProps {
   filteredBanks: string[];
@@ -52,10 +52,10 @@ function BankList({ filteredBanks, setFilteredBanks }: BankListProps) {
         <li
           key={index}
           className={cx(
-            "cursor-pointer min-w-[90px] grid gap-y-2 justify-items-center border px-2 py-5 rounded-md",
+            'cursor-pointer min-w-[90px] grid gap-y-2 justify-items-center border px-2 py-5 rounded-md',
             filteredBanks?.includes(bank.fin_co_no)
-              ? "border-pink-500"
-              : "border-gray-200 "
+              ? 'border-pink-500'
+              : 'border-gray-200 '
           )}
           onClick={() => handleClickBank(bank.fin_co_no)}
         >

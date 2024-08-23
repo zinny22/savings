@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Card from "../Molecules/ProductCard";
-import { useRouter } from "next/navigation";
-import { SortKey } from "./DepositCardList";
-import getSortedProductsByRate from "@/utils/getSortedProductsByRate";
-import { BaseList, CombinedDeposit, OptionList } from "@/schema/deposit.schema";
-import getGroupProductsByMatchingProductCode from "@/utils/getGroupProductsByMatchingProductCode";
-import { finGrpNos } from "../Pages/ListDetail";
+import React, { useEffect, useState } from 'react';
+import Card from '../molecules/ProductCard';
+import { useRouter } from 'next/navigation';
+import { SortKey } from './DepositCardList';
+import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
+import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
+import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
+import { finGrpNos } from '../pages/ListDetail';
 
 interface AnnuitySavingListProps {
   filteredBanks: string[];
@@ -19,7 +19,7 @@ function AnnuitySavingList({ filteredBanks }: AnnuitySavingListProps) {
   const [combinedAnnuitySaving, setCombinedAnnuitySavings] = useState<
     CombinedDeposit[]
   >([]);
-  const [sort, setSort] = useState<SortKey>("최고금리순");
+  const [sort, setSort] = useState<SortKey>('최고금리순');
 
   const initAnnuitySavingProducts = async (finGrpNo: string) => {
     const auth = process.env.NEXT_PUBLIC_KEY;
@@ -63,9 +63,9 @@ function AnnuitySavingList({ filteredBanks }: AnnuitySavingListProps) {
         <p>{AnnuitySavings.length}개</p>
         <div
           onClick={() =>
-            sort === "최고금리순"
-              ? setSort("기본금리순")
-              : setSort("최고금리순")
+            sort === '최고금리순'
+              ? setSort('기본금리순')
+              : setSort('최고금리순')
           }
         >
           {sort}
@@ -73,7 +73,7 @@ function AnnuitySavingList({ filteredBanks }: AnnuitySavingListProps) {
       </div>
 
       <ul className="grid gap-y-5 divide-y-2">
-        {(sort === "최고금리순"
+        {(sort === '최고금리순'
           ? sortedProductsByMaxRate
           : sortedProductsByBaseRate
         ).map((AnnuitySaving, index) => {
@@ -82,7 +82,7 @@ function AnnuitySavingList({ filteredBanks }: AnnuitySavingListProps) {
           );
 
           const baseIntrRate = [...AnnuitySaving.optionList].find(
-            (item) => item.save_trm === "12"
+            (item) => item.save_trm === '12'
           );
 
           return (
