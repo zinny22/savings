@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 
 interface ToggleProps {
   list: string[];
+  setToggle: Dispatch<SetStateAction<string>>;
 }
 
-export default function Toggle({ list }: ToggleProps) {
+export default function Toggle({ list, setToggle }: ToggleProps) {
   const togglePaddingX = 8;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,8 +18,9 @@ export default function Toggle({ list }: ToggleProps) {
     }
   }, [list.length]);
 
-  const nextState = (index: number) => {
+  const nextState = (index: number, value: string) => {
     setCurrentIndex(index);
+    setToggle(value);
   };
 
   // 슬라이더가 이동할 수 있는 위치 계산
@@ -37,7 +39,7 @@ export default function Toggle({ list }: ToggleProps) {
         {list.map((item, index) => (
           <span
             key={item}
-            onClick={() => nextState(index)}
+            onClick={() => nextState(index, item)}
             className={`font-bold flex z-40 transition-colors duration-300 ${
               currentIndex === index ? 'text-white' : 'text-[#62636C]'
             }`}

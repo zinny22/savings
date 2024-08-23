@@ -1,4 +1,4 @@
-import { Children, isValidElement, ReactNode } from 'react';
+import { Children, isValidElement, MouseEventHandler, ReactNode } from 'react';
 import VerticalCardRank from './sub/VerticalCardRank';
 import VerticalCardBadges from './sub/VerticalCardBadges';
 import VerticalCardBank from './sub/VerticalCardBank';
@@ -16,9 +16,10 @@ function getVerticalCardComponents(
 
 interface VerticalCardProps {
   children?: ReactNode;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-function VerticalCardContainer({ children }: VerticalCardProps) {
+function VerticalCardContainer({ children, onClick }: VerticalCardProps) {
   const verticalCardRank = getVerticalCardComponents(
     children,
     VerticalCardRank
@@ -37,13 +38,16 @@ function VerticalCardContainer({ children }: VerticalCardProps) {
   );
 
   return (
-    <div className="py-7 px-6 rounded-[20px] w-fit bg-[#F9F9FB] grid gap-y-6">
+    <div
+      className="py-7 px-6 rounded-[20px] w-fit bg-[#F9F9FB] grid gap-y-6"
+      onClick={onClick}
+    >
       <div className="flex items-center gap-2">
         {verticalCardRank && <div>{verticalCardRank}</div>}
         {verticalCardBadge && <div>{verticalCardBadge}</div>}
       </div>
 
-      <div>
+      <div className="grid gap-y-5">
         {verticalCardBank && <div>{verticalCardBank}</div>}
         {verticalCardRate && <div>{verticalCardRate}</div>}
       </div>

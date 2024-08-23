@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../molecules/ProductCard';
 import { useRouter } from 'next/navigation';
-import { SortKey } from './DepositCardList';
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
 import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
 import { finGrpNos } from '../pages/ListDetail';
+import { SortKey } from './DepositCardList';
 
 interface AnnuitySavingListProps {
   filteredBanks: string[];

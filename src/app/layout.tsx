@@ -19,7 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <div className="bg-white">{children}</div>
+        <div className="bg-white flex justify-center">
+          <div className=" max-w-[770px] w-full">{children}</div>
+        </div>
       </body>
     </html>
   );
