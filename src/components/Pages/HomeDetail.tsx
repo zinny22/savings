@@ -6,7 +6,9 @@ import VerticalCardList from '../organisms/VerticalCardList/VerticalCardList';
 import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
-import { finGrpNos } from './ListDetail';
+import Header from '../molecules/Header/Header';
+
+const finGrpNos = ['020000', '030200', '030300', '050000', '060000'];
 
 function HomeDetail() {
   const [toggle, setToggle] = useState('');
@@ -76,16 +78,19 @@ function HomeDetail() {
   }, []);
 
   return (
-    <div className="h-[100vh] w-full pt-[58px]">
-      <div className="flex justify-between items-center">
-        <p>이자 높은 상품</p>
-        <Toggle list={['예금', '적금', '파킹']} setToggle={setToggle} />
-      </div>
+    <>
+      <Header isOnlyLogo />
+      <div className="h-[100vh] w-full pt-[58px]">
+        <div className="flex justify-between items-center">
+          <p>이자 높은 상품</p>
+          <Toggle list={['예금', '적금', '파킹']} setToggle={setToggle} />
+        </div>
 
-      <VerticalCardList
-        sortedProductsByMaxRate={sortedProductsByMaxRate.slice(0, 4)}
-      />
-    </div>
+        <VerticalCardList
+          sortedProductsByMaxRate={sortedProductsByMaxRate.slice(0, 4)}
+        />
+      </div>
+    </>
   );
 }
 
