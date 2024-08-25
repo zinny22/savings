@@ -1,4 +1,3 @@
-import Header from '@/components/organisms/Header';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -18,7 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
         <div className="bg-white flex justify-center">
           <div className=" max-w-[770px] w-full">{children}</div>
         </div>
