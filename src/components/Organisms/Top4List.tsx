@@ -3,7 +3,7 @@
 import { cx } from 'class-variance-authority';
 import Link from 'next/link';
 import { useState } from 'react';
-import Toggle from '../temp_atom/Toggle/Toggle';
+import Toggle from '../atom/Toggle/Toggle';
 import DepositCardList from './DepositCardList';
 import SavingCardList from './SavingCardList';
 

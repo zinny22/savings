@@ -6,7 +6,7 @@ import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
 import Header from '@/components/molecules/Header/Header';
-import Toggle from '@/components/temp_atom/Toggle/Toggle';
+import Toggle from '@/components/atom/Toggle/Toggle';
 import VerticalCardList from '@/components/organisms/VerticalCardList/VerticalCardList';
 
 const finGrpNos = ['020000', '030200', '030300', '050000', '060000'];

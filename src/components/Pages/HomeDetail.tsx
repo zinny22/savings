@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Toggle from '../temp_atom/Toggle/Toggle';
+import Toggle from '../atom/Toggle/Toggle';
 import VerticalCardList from '../organisms/VerticalCardList/VerticalCardList';
 import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
