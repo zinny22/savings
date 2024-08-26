@@ -67,7 +67,7 @@ function HomeDetail() {
     finGrpNos.forEach((finGrpNo) => {
       initDepositProducts(finGrpNo);
     });
-  }, []);
+  }, [toggle]);
 
   useEffect(() => {
     if (toggle !== '적금') return;
@@ -75,7 +75,7 @@ function HomeDetail() {
     finGrpNos.forEach((finGrpNo) => {
       initSavingProducts(finGrpNo);
     });
-  }, []);
+  }, [toggle]);
 
   return (
     <>
