@@ -1,4 +1,4 @@
-import VerticalCard from '@/components/molecules/VerticalCard';
+import VerticalCard from '@/components/temp_molecules/VerticalCard';
 import { CombinedDeposit } from '@/schema/deposit.schema';
 import { useRouter } from 'next/router';
 

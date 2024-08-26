@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import Toggle from '../atom/Toggle/Toggle';
-import VerticalCardList from '../organisms/VerticalCardList/VerticalCardList';
+import VerticalCardList from '../temp_organisms/VerticalCardList/VerticalCardList';
 import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
-import Header from '../molecules/Header/Header';
+import Header from '../temp_molecules/Header/Header';
 
 const finGrpNos = ['020000', '030200', '030300', '050000', '060000'];
 

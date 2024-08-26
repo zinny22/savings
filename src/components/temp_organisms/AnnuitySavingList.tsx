@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Card from '../molecules/ProductCard';
+import Card from '../temp_molecules/ProductCard';
 import { useRouter } from 'next/navigation';
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
 import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
-import { finGrpNos } from '../pages/ListDetail';
+import { finGrpNos } from '../temp_pages/ListDetail';
 import { SortKey } from './DepositCardList';
 
 interface AnnuitySavingListProps {
