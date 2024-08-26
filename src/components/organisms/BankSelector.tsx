@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import BankList from '../temp_molecules/BankList';
-import TabButton, { TabKey } from '../temp_molecules/TabButton';
+import BankList from '../molecules/BankList';
+import TabButton, { TabKey } from '../molecules/TabButton';
 
 interface BankSelectorProps {
   lastPathName: TabKey;

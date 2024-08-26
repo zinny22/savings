@@ -5,8 +5,8 @@ import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMat
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import ProductCard from '../temp_molecules/ProductCard';
-import { finGrpNos } from '../temp_pages/ListDetail';
+import ProductCard from '../molecules/ProductCard';
+import { finGrpNos } from '../pages/ListDetail';
 
 export type SortKey = '최고금리순' | '기본금리순';
 interface DepositCardListProps {

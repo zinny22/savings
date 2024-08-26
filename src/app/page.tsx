@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react';
 import { BaseList, CombinedDeposit, OptionList } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
-import Header from '@/components/temp_molecules/Header/Header';
+
 import Toggle from '@/components/atom/Toggle/Toggle';
-import VerticalCardList from '@/components/temp_organisms/VerticalCardList/VerticalCardList';
+import VerticalCardList from '@/components/organisms/VerticalCardList/VerticalCardList';
+import Header from '@/components/molecules/Header/Header';
 
 const finGrpNos = ['020000', '030200', '030300', '050000', '060000'];
 

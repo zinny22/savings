@@ -3,7 +3,7 @@
 import BankSchema, { BankBaseList } from '@/schema/bank.schema';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { cx } from 'class-variance-authority';
-import { finGrpNos } from '../temp_pages/ListDetail';
+import { finGrpNos } from '../pages/ListDetail';
 import Image from 'next/image';
 import getBankNameAbbreviation from '@/utils/getBankNameAbbreviation';
 

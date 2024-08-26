@@ -2,7 +2,7 @@ import DepositSchema, { CombinedDeposit } from '@/schema/deposit.schema';
 import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMatchingProductCode';
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
 import { useEffect, useState } from 'react';
-import ProductCard from '../temp_molecules/ProductCard';
+import ProductCard from '../molecules/ProductCard';
 import { useRouter } from 'next/navigation';
 
 interface RelativeProductListProps {

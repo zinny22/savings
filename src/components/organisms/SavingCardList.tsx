@@ -5,8 +5,8 @@ import getGroupProductsByMatchingProductCode from '@/utils/getGroupProductsByMat
 import getSortedProductsByRate from '@/utils/getSortedProductsByRate';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Card from '../temp_molecules/ProductCard';
-import { finGrpNos } from '../temp_pages/ListDetail';
+import Card from '../molecules/ProductCard';
+import { finGrpNos } from '../pages/ListDetail';
 import { SortKey } from './DepositCardList';
 interface SavingCardListProps {
   filteredBanks: string[];
