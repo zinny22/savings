@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "if [ \"$VERCEL_ENV\" == \"production\" ]; then npm run build; else echo 'Skipping build step'; fi",
-    "build:app": "next build",
-    "build:local": "VERCEL_ENV=local npm run build:app",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
