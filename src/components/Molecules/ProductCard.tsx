@@ -1,5 +1,5 @@
 import getBankNameAbbreviation from '@/utils/getBankNameAbbreviation';
-import Icon, { IconName } from '../atom/Icon';
+import Icon, { IconName } from '../temp_atom/Icon';
 import Image from 'next/image';
 
 interface ProductCardProps {

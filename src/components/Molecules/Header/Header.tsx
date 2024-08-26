@@ -1,6 +1,6 @@
 'use client';
 
-import Icon from '@/components/atom/Icon';
+import Icon from '@/components/temp_atom/Icon';
 import { cx } from 'class-variance-authority';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

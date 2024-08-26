@@ -3,7 +3,7 @@
 import { cx } from 'class-variance-authority';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Icon from '../atom/Icon';
+import Icon from '../temp_atom/Icon';
 
 function Header() {
   const pathName = usePathname();
